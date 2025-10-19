@@ -3,12 +3,62 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Note + Task Saver</title>
+  <title>MindNote</title>
+  <meta name="description" content="A tiny, offline-friendly note & task app that saves to your browser using localStorage." />
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Note + Task Saver</h1>
-  <div id="app"></div>
+  <div class="container">
+    <div class="app" id="app">
+      <header>
+        <div class="title">
+          <div class="logo" aria-hidden="true">🗒️</div>
+          <span>MindNote</span>
+        </div>
+        <div class="controls">
+          <button id="themeToggle" class="btn-ghost" aria-label="Toggle theme">🌓</button>
+          <button id="exportBtn" class="btn-ghost" title="Export to JSON">Export</button>
+          <button id="importBtn" class="btn-ghost" title="Import from JSON">Import</button>
+          <button id="clearBtn" class="btn-danger" title="Delete all">Clear All</button>
+        </div>
+      </header>
+
+      <div class="toolbar">
+        <div class="toolbar-row">
+          <input type="text" id="search" placeholder="Search notes (Ctrl + K or /)" />
+          <select id="filter">
+            <option value="all">All</option>
+            <option value="open">Open</option>
+            <option value="done">Completed</option>
+          </select>
+          <select id="sort">
+            <option value="created_desc">Newest</option>
+            <option value="created_asc">Oldest</option>
+            <option value="title_asc">Title A→Z</option>
+            <option value="title_desc">Title Z→A</option>
+          </select>
+        </div>
+      </div>
+
+      <form class="form" id="taskForm" autocomplete="off">
+        <input id="title" placeholder="Title (e.g., Idea, Reminder)" required />
+        <textarea id="desc" placeholder="Description or Notes (optional)"></textarea>
+        <button class="btn-accent" type="submit">Add</button>
+      </form>
+
+      <div class="list" id="list"></div>
+
+      <div id="emptyState" class="empty" hidden>
+        No notes yet. Add your first one ✨
+      </div>
+
+      <footer>
+        <div>Stored locally - no account needed</div>
+        <div>Shortcut: <span class="kbd">/</span> to search</div>
+      </footer>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
