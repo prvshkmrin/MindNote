@@ -1,34 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mind Note</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="app">
-    <header class="app-header">
-      <h1>
-        Mind Note
-      </h1>
-      <div class="controls">
-        <button id="new-note">New</button>
-        <input id="search" type="search" placeholder="Search Notes.."/>
-        <button id="sync">Sync</button>
-      </div>
-    </header>
-    <main class="main-content">
-      <section class="sidebar">
-        <ul id="notes-list">
 
-        </ul>
-      </section>
-      <section class="editor">
-        <textarea id="note-editor" placeholder="Write your thoughts..."></textarea>
-      </section>
-    </main>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindNote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>MindNote</h1>
+    <div class="note-input">
+      <input type="text" id="noteTitle" placeholder="Enter note" />
+      <textarea id="noteContent" placeholder="Enter note content..."></textarea>
+      <button id="addNoteBtn">Add Note</button>
+    </div>
+    <ul id="notesList"></ul>
   </div>
+
   <script src="app.js"></script>
 </body>
+
 </html>

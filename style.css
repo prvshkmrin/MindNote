@@ -1,165 +1,75 @@
-body{
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f7fa;
   margin: 0;
   padding: 0;
-  height: 100vh;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background: linear-gradient(90deg, #435680, #15a17e);
-  background-attachment: fixed;
-  color: #f9fafb;
-  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.note-input {
   display: flex;
   flex-direction: column;
-}
-.app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  gap: 10px;
 }
 
-.app-header {
-  background: rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  backdrop-filter: blur(10px);
-}
-.app-header h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 1px;
-  user-select: none;
-}
-
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.controls input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  font-size: 0.9rem;
-  outline: none;
-  transition: all 0.2s ease;
-}
-.controls button {
-  background: #6366f1;
-  color: #ffffff;
-  border: none;
-  padding: 0.5rem 0.9rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-.controls button:hover {
-  background: #4f46e5;
-  transform: scale(1.05);
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  height: 100%;
-  overflow: hidden;
-}
-
-.sidebar {
-  width: 280px;
-  background: rgba(255, 255, 255, 0.08);
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 1rem;
-  overflow-y: auto;
-  backdrop-filter: blur(8px);
-}
-#notes-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-#notes-list li {
-  padding: 0.75rem;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-/* Hover effect for note items */
-#notes-list li:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.02);
-}
-
-/* 📝 Editor Section */
-.editor {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  backdrop-filter: blur(8px);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-/* Textarea inside the editor */
-#note-editor {
-  flex: 1;
-  resize: none;
+input,
+textarea {
   width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+textarea {
+  display: none;
+  /* hidden by default */
+}
+
+button {
+  padding: 10px;
+  background: #0078ff;
+  color: white;
   border: none;
-  outline: none;
-  font-size: 1rem;
-  line-height: 1.6;
-  background: transparent;
-  color: #ffffff;
-  font-family: "Inter", system-ui, sans-serif;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-/* Subtle scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
+button:hover {
+  background: #005fcc;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+#notesList {
+  list-style: none;
+  padding: 0;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
+.note-item {
+  background: #eef3f9;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* ✨ Responsive Design */
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
-
-  .editor {
-    padding: 1rem;
-  }
-
-  .app-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  .controls {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .controls input {
-    flex: 1;
-  }
+.note-item:hover {
+  background: #dce6f3;
 }

@@ -1,102 +1,57 @@
-// app.js — Minimal Mind Note (title input once, content hidden until opened)
+const noteTitle = document.getElementById('noteTitle');
+const noteContent = document.getElementById('noteContent');
+const addNoteBtn = document.getElementById('addNoteBtn');
+const notesList = document.getElementById('notesList');
 
-// Run only after DOM is loaded
-window.addEventListener("DOMContentLoaded", () => {
+let notes = JSON.parse(localStorage.getItem('mindNotes')) || [];
 
-  // === DOM References ===
-  const newBtn = document.getElementById("new-note");
-  const search = document.getElementById("search");
-  const notesList = document.getElementById("notes-list");
-  const editor = document.getElementById("note-editor");
+// Display notes
+function renderNotes() {
+  notesList.innerHTML = '';
+  notes.forEach((note, index) => {
+    const li = document.createElement('li');
+    li.classList.add('note-item');
+    li.textContent = note.title;
+    li.addEventListener('click', () => toggleContent(index));
+    notesList.appendChild(li);
+  });
+}
 
-  // === State ===
-  let notes = []; // each note: { id, title, content, created, updated }
-  let activeNoteId = null;
-  const LS_KEY = "mindnote.minimal.v1";
+// Toggle showing content
+function toggleContent(index) {
+  const note = notes[index];
+  const existing = document.querySelector(`.content-${index}`);
 
-  // === Helpers ===
-  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-  const load = () => JSON.parse(localStorage.getItem(LS_KEY) || "[]");
-  const save = () => localStorage.setItem(LS_KEY, JSON.stringify(notes));
-  const findNote = (id) => notes.find(n => n.id === id);
+  if (existing) {
+    existing.remove(); // hide content if already open
+  } else {
+    const p = document.createElement('p');
+    p.classList.add(`content-${index}`);
+    p.style.marginTop = '5px';
+    p.style.background = '#f8faff';
+    p.style.padding = '8px';
+    p.style.borderRadius = '6px';
+    p.textContent = note.content;
+    notesList.children[index].appendChild(p);
+  }
+}
 
-  // === Initial Load ===
-  notes = load();
+// Add note
+addNoteBtn.addEventListener('click', () => {
+  const title = noteTitle.value.trim();
+  const content = noteContent.value.trim();
+
+  if (!title) {
+    alert('Please enter a title');
+    return;
+  }
+
+  notes.push({ title, content });
+  localStorage.setItem('mindNotes', JSON.stringify(notes));
+
+  noteTitle.value = '';
+  noteContent.value = '';
   renderNotes();
-  renderEditor();
-
-  // === Create New Note ===
-  newBtn.addEventListener("click", () => {
-    const title = prompt("Enter a title for the new note:", "");
-    if (title === null) return;
-    const trimmed = title.trim();
-    if (!trimmed) {
-      alert("Title cannot be empty.");
-      return;
-    }
-    const n = {
-      id: uid(),
-      title: trimmed,
-      content: "",
-      created: new Date().toISOString(),
-      updated: new Date().toISOString()
-    };
-    notes.push(n);
-    save();
-    activeNoteId = n.id;
-    renderNotes();
-    renderEditor();
-  });
-
-  // === Render Notes List ===
-  function renderNotes() {
-    notesList.innerHTML = "";
-    const sorted = [...notes].sort((a, b) => (a.updated < b.updated ? 1 : -1));
-
-    if (!sorted.length) {
-      const empty = document.createElement("div");
-      empty.className = "notes-empty";
-      empty.textContent = "No notes yet — click New.";
-      notesList.appendChild(empty);
-      return;
-    }
-
-    for (const n of sorted) {
-      const li = document.createElement("li");
-      li.className = "note-item";
-      li.textContent = n.title;
-      li.dataset.id = n.id;
-      li.addEventListener("click", () => {
-        activeNoteId = n.id;
-        renderNotes();
-        renderEditor();
-      });
-      if (n.id === activeNoteId) li.classList.add("selected");
-      notesList.appendChild(li);
-    }
-  }
-
-  // === Render Editor ===
-  function renderEditor() {
-    const note = findNote(activeNoteId);
-    if (!note) {
-      editor.value = "";
-      editor.placeholder = "Select a note to view and edit its content...";
-      editor.disabled = true;
-      return;
-    }
-    editor.disabled = false;
-    editor.value = note.content || "";
-    editor.focus();
-  }
-
-  // === Save On Input ===
-  editor.addEventListener("input", () => {
-    const note = findNote(activeNoteId);
-    if (!note) return;
-    note.content = editor.value;
-    note.updated = new Date().toISOString();
-    save();
-    renderNotes();
-  });
 });
+
+renderNotes();
